@@ -1,0 +1,14 @@
+mutation addNoteToSome {
+  addNoteToQueue(recipientId: 0, note: "This is a note") {
+    name
+    queue
+  }
+}
+
+query getSomeone {
+  getRecipientInfo(id: 0) {
+    name
+    address
+    queue
+  }
+}
