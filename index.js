@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express'),
+      cors = require('cors'),
       graphqlHTTP = require('express-graphql'),
       { makeExecutableSchema } = require('graphql-tools')
 
@@ -81,14 +82,16 @@ const graphQLServer = express();
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
   resolvers: Resolvers,
-});
+})
 
-graphQLServer.use('/graphql', graphqlHTTP({
-  schema: executableSchema,
-  graphiql: true
-}))
-.use('/static', express.static('static'));
+graphQLServer
+  .use(cors())
+  .use('/graphql', graphqlHTTP({
+    schema: executableSchema,
+    graphiql: true
+  }))
+  .use('/static', express.static('static'))
 
-graphQLServer.listen(GRAPHQL_PORT);
+graphQLServer.listen(GRAPHQL_PORT)
 
-console.log(`Running a GraphQL API server at localhost:${GRAPHQL_PORT}/graphql`);
+console.log(`Running a GraphQL API server at localhost:${GRAPHQL_PORT}/graphql`)
