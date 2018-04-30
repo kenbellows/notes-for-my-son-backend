@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-const express = require('express')
-const graphqlHTTP = require('express-graphql')
-const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools')
+const express = require('express'),
+      graphqlHTTP = require('express-graphql'),
+      { makeExecutableSchema } = require('graphql-tools')
 
 const Schema = `
   type Recipient {
@@ -69,15 +69,11 @@ const Resolvers = {
       return user.recipients.map(getRecipient)
     }
   }
-};
+}
 
 function getRecipient(id) {
   return {id, ...testDB.recipients[id]}
 }
-
-// if given an empty object, the default mock functions will be used.
-// for how to override the default mocks, see the documentation or tutorial.
-const Mocks = {};
 
 const GRAPHQL_PORT = 3000;
 const graphQLServer = express();
@@ -87,16 +83,11 @@ const executableSchema = makeExecutableSchema({
   resolvers: Resolvers,
 });
 
-/*addMockFunctionsToSchema({
-  schema: executableSchema,
-  mocks: Mocks,
-  preserveResolvers: false,
-});*/
-
 graphQLServer.use('/graphql', graphqlHTTP({
   schema: executableSchema,
   graphiql: true
-}));
+}))
+.use('/static', express.static('static'));
 
 graphQLServer.listen(GRAPHQL_PORT);
 
