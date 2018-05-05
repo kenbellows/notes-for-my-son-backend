@@ -44,7 +44,10 @@ const testDB = {
     0: {
       address: 'someone@example.com',
       name: 'Someone Jones',
-      queue: []
+      queue: [
+        'Hey Someone! How\'s things?',
+        'We should meet for lunch next week' 
+      ]
     }
   }
 }
